@@ -59,7 +59,10 @@
 		<p>Now, in order to check whether points I am iterating through are inside or outside the triangle, I use the three line test. Essentially this checks
 		whether a point is inside an edge, outside an edge, or on an edge by calculating the cross product of a point and a line defined by two vertices.
 		If the cross product is on the same side of all of the lines (i.e. their cross products are all the same sign), then the point lies within the triangle
-		and is rasterized with the given color.</p>
+		and is rasterized with the given color. The following is the cross product formula used for this evaluation.</p>
+				
+				<li>\[ (x - x0) * (y1 - y0) - (y - y0) * (x1 - x0) \]</li>  
+
 
 		<p>My algorithm only iterates over samples within the min and max x and y bounds of the triangles which means it performs a constant amount of operations
 		per triangle. This means it's no worse than an algorithm that checks every sample within a box defined by a rectangle.</p>
@@ -77,16 +80,6 @@
 				  <figcaption>Jagged edges shown when zoomed in.</figcaption>
 				</td>
 			  </tr>
-			  <tr>
-				<td style="text-align: center;">
-				  <img src="lion.jpg" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
-				</td>
-				<td style="text-align: center;">
-				  <img src="lion.jpg" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
-				</td>
-			  </tr>
 			</table>
 		</div>
 		
@@ -97,10 +90,10 @@
 		rate. Initially, I sampled at the center of each pixel but for super sampling, I need to convert our initial pixel to it's place on the expanded
 		grid with w * h * sample rate pixels. For this conversion, I added extra for loops that iterated sample rate times per pixel since each pixel 
 		is now split up into sample rate groups. Then I used the equation:
-			<ul>
+
 				<li>\[ x + (i + 0.5) / s \]</li>  
 				<li>\[ y + (j + 0.5) / s \]</li>  
-			</ul>
+
 		to convert the location of the pixel at x, y to its new location on the expanded sample_buffer. The i and j facillitated the break down of each pixel into 
 		sample rate parts to determine the transformation. Now, we use the same equation as before to compute whether or not the subpixel lies within the
 		triangle. If it does, that subpixel is colored. In order to fill a pixel with the average color of all of its subsamples which is the ultimate goal, 
@@ -121,7 +114,7 @@
 			  </tr>
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="sample9" width="400px"/>
+				  <img src="sample16.png" width="400px"/>
 				  <figcaption>Triangles after sample_rate = 16.</figcaption>
 				</td>
 			  </tr>
