@@ -164,17 +164,17 @@
 			<div class="matrix">
 				<table>
 				  <tr>
-					<td>cos &alpha</td><td>-sin &alpha</td><td>0</td>
+					<td>cos α</td><td>-sin α</td><td>0</td>
 				  </tr>
 				  <tr>
-					<td>sin &alpha</td><td>cos &alpha</td><td>0</td>
+					<td>sin α</td><td>cos α</td><td>0</td>
 				  </tr>
 				  <tr>
 					<td>0</td><td>0</td><td>1</td>
 				  </tr>
 				</table>
 			  </div> 
-			This represents rotation by converting the matrix with our 2D (x, y) point to (xcos &alpha - ysin &alpha, xsin &alpha + ycos &alpha, 1). This effectively rotates it &alpha degrees.
+			This represents rotation by converting the matrix with our 2D (x, y) point to (xcos α - ysin α, xsin α + ycos α, 1). This effectively rotates it &alpha degrees.
 		</p>
 
 		<p>I added translations to the original robot in order to make it appear as if it "worked out" by rotating the head back straight and scaling the biceps and thighs to appear bigger. </p>
@@ -195,7 +195,39 @@
 		</div>
 
 		<h2>Task 4: Barycentric coordinates</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		Keeping my original methods of rasterizing triangles and supersampling from task 1 and task 2, I made one addition amendment to my code in order to support drawing colors
+		within triangles using barycentric interpolation. Using barycentric interpolation, vertices are defined to have given colors. Colors that aren't in the defined vertices are
+		given colors that are a mix of the colors at the vertices proportional to their distances to those vertices. Barycentric interpolation ensures a smooth gradient of colors
+		among the triangle. In order to determine what color a particular point should take, we calculate 3 parameters: α, β, and γ. If we split the triangle into three subtriangle
+		created by drawing a line from each vertex to the point we are coloring, these three parameters are equal to the proportion of each subtriangle to the total area of the subtriangle.
+		Therefore, to calculate these values, I used the equations: 
+
+				<li>\[ α = subtriangle a / triangle area \]</li>  
+				<li>\[ β = subtriangle b / triangle area \]</li>
+				<li>\[ γ = subtriangle c / triangle area \]</li> 
+		<p>Then, I combined these proportions (called proportions since α + β + γ = 1) to determine the color of the pixel.</p>
+				<li>\[ α * color of vertex a + β * color of vertex b + γ * color of vertex c \]</li> 		
+		<p>As we can see in the following two pictures, the colors are populated in a smooth gradient due to the barycentric interpolation. When setting a triangle's three vertices to just
+			a solid red, blue, and green, the colors are more red towards the red vertex, more blue towards the blue vertex, and more green towards the green vertex. Getting closer to the middle,
+			the triangle begins to show a mixture of the three colors.
+		</p>
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="color_wheel.png" width="400px"/>
+				  <figcaption>Color wheel demonstrating smooth gradient of color.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="colored_triangle.png" width="400px"/>
+				  <figcaption>Single triangle with RGB vertices.</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+			  
+
 
 		<h2>Task 5: "Pixel sampling" for texture mapping</h2>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
