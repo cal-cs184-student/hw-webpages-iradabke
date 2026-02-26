@@ -32,7 +32,7 @@
 
 		<br>
 
-		Link to webpage: (TODO) <a href="https://cs184.eecs.berkeley.edu/sp25">cs184.eecs.berkeley.edu/sp25</a>
+		Link to webpage: <a href="https://cal-cs184-student.github.io/hw-webpages-iradabke/hw1/index.html">cs184.eecs.berkeley.edu/sp25</a>
 		
 		<br>
 
@@ -51,19 +51,30 @@
 		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
 
 		<h2>Task 1: Drawing Single-Color Triangles</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		To rasterize the triangles, I implemented an algorithm to sample whether a point lies within or outside of the triangle. I know that if I'm given
+		the three points of a triangle, all of the x-coordinates of points contained within the triangle must be greater than or equal to that minimum point. 
+		The same logic is applied to the minimum y-coordinate which is which why when iterating through points, I can directly start iterating at the minimum x
+		and y coordinates and stop and the maximum x and y coordinates as opposed to sampling every point in the sample space. 
+
+		Now, in order to check whether points I am iterating through are inside or outside the triangle, I use the three line test. Essentially this checks
+		whether a point is inside an edge, outside an edge, or on an edge by calculating the cross product of a point and a line defined by two vertices.
+		If the cross product is on the same side of all of the lines (i.e. their cross products are all the same sign), then the point lies within the triangle
+		and is rasterized with the given color. 
+
+		My algorithm only iterates over samples within the min and max x and y bounds of the triangles which means it performs a constant amount of operations
+		per triangle. This means it's no worse than an algorithm that checks every sample within a box defined by a rectangle. 
 
 		<p>Here is an example 2x2 gridlike structure using an HTML table. Each <b>tr</b> is a row and each <b>td</b> is a column in that row. You might find this useful for framing and showing your result images in an organized fashion.</p>
 		<div style="display: flex; flex-direction: column; align-items: center;">
 			<table style="width: 100%; text-align: center; border-collapse: collapse;">
 			  <tr>
 				<td style="text-align: center;">
-				  <img src="lion.jpg" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="triangle.png" width="400px"/>
+				  <figcaption>Triangles after sampling.</figcaption>
 				</td>
 				<td style="text-align: center;">
-				  <img src="lion.jpg" width="400px"/>
-				  <figcaption>Caption goes here.</figcaption>
+				  <img src="jag_triangle.png" width="400px"/>
+				  <figcaption>Jagged edges shown when zoomed in.</figcaption>
 				</td>
 			  </tr>
 			  <tr>
